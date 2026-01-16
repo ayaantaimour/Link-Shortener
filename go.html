@@ -5,14 +5,19 @@
 <title>Redirecting…</title>
 
 <script>
-let hash = window.location.hash.substring(1);
-if(hash){
-  try{
-    let url = atob(hash);
-    setTimeout(()=>{ window.location.href = url; }, 1500);
-  }catch(e){
-    document.body.innerHTML = "Invalid link";
-  }
+const params = new URLSearchParams(window.location.search);
+const code = params.get("c");
+
+let data = JSON.parse(localStorage.getItem("links") || "{}");
+
+if(code && data[code]){
+  setTimeout(()=>{
+    window.location.href = data[code];
+  }, 1500);
+}else{
+  document.addEventListener("DOMContentLoaded", ()=>{
+    document.body.innerHTML = "<h3>Invalid or expired link</h3>";
+  });
 }
 </script>
 
