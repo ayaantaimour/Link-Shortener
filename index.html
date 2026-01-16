@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Simple Link Shortener</title>
+<title>Link Shortener</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
   font-family:Arial;
-  background:#0f172a;
+  background:#0b1220;
   color:#fff;
   display:flex;
   align-items:center;
@@ -16,7 +16,7 @@ body{
   height:100vh;
 }
 .box{
-  background:#111827;
+  background:#0f172a;
   padding:25px;
   border-radius:10px;
   width:100%;
@@ -29,7 +29,6 @@ input,button{
   border:none;
   border-radius:6px;
 }
-input{font-size:14px;}
 button{
   background:#3b82f6;
   color:#fff;
@@ -42,14 +41,29 @@ button{
 </style>
 
 <script>
+function randomCode(len=5){
+  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let out = "";
+  for(let i=0;i<len;i++){
+    out += chars[Math.floor(Math.random()*chars.length)];
+  }
+  return out;
+}
+
 function shorten(){
   let longUrl = document.getElementById("long").value.trim();
   if(!longUrl.startsWith("http")){
     alert("Valid URL daalo");
     return;
   }
-  let encoded = btoa(longUrl);
-  let shortUrl = location.origin + location.pathname.replace("index.html","") + "go.html#" + encoded;
+
+  let code = randomCode(5);
+  let data = JSON.parse(localStorage.getItem("links") || "{}");
+  data[code] = longUrl;
+  localStorage.setItem("links", JSON.stringify(data));
+
+  let shortUrl = location.origin + location.pathname.replace("index.html","") + "go.html?c=" + code;
+
   document.getElementById("out").innerHTML =
     'Short link:<br><a href="'+shortUrl+'" target="_blank">'+shortUrl+'</a>';
 }
