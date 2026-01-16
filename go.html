@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Redirecting…</title>
+
+<script>
+let hash = window.location.hash.substring(1);
+if(hash){
+  try{
+    let url = atob(hash);
+    setTimeout(()=>{ window.location.href = url; }, 1500);
+  }catch(e){
+    document.body.innerHTML = "Invalid link";
+  }
+}
+</script>
+
+<style>
+body{
+  font-family:Arial;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+}
+</style>
+</head>
+
+<body>
+<h3>Redirecting, please wait…</h3>
+</body>
+</html>
