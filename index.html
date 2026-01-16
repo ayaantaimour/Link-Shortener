@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simple Link Shortener</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family:Arial;
+  background:#0f172a;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+}
+.box{
+  background:#111827;
+  padding:25px;
+  border-radius:10px;
+  width:100%;
+  max-width:420px;
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:6px;
+}
+input{font-size:14px;}
+button{
+  background:#3b82f6;
+  color:#fff;
+  cursor:pointer;
+}
+.result{
+  margin-top:15px;
+  word-break:break-all;
+}
+</style>
+
+<script>
+function shorten(){
+  let longUrl = document.getElementById("long").value.trim();
+  if(!longUrl.startsWith("http")){
+    alert("Valid URL daalo");
+    return;
+  }
+  let encoded = btoa(longUrl);
+  let shortUrl = location.origin + location.pathname.replace("index.html","") + "go.html#" + encoded;
+  document.getElementById("out").innerHTML =
+    'Short link:<br><a href="'+shortUrl+'" target="_blank">'+shortUrl+'</a>';
+}
+</script>
+</head>
+
+<body>
+<div class="box">
+  <h2>Link Shortener</h2>
+  <input id="long" placeholder="Paste long URL here">
+  <button onclick="shorten()">Shorten</button>
+  <div id="out" class="result"></div>
+</div>
+</body>
+</html>
